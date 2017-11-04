@@ -15,6 +15,7 @@ class Feedback(tk.Frame):
         self.pack()
         self.createWidgets()
 
+
     def createWidgets(self):
         var = StringVar()
         self.hi_there = tk.Button(self)
@@ -97,8 +98,7 @@ def copySingleMessages(iFile, iTmpFolder):
                 preLName.text = hashlib.md5(preLName.text.encode('utf-8')).hexdigest()
             except AttributeError:
                 pass
-            #ElementTree.dump(tree2)
-            ##end has data
+
             tree2.write(open(newFile, 'wb'), encoding='UTF-8', xml_declaration=True)
         return files2Check
 
@@ -169,8 +169,6 @@ for f in alaFiles:
     if count < int(_qFil2Analy):
         alaNews.extend(copySingleMessages(f, _tmpInDir))
         count = count + 1
-    ##    count2 = count2 + 1
-    ##    boomiOlds.extend(copySingleMessages(f, _tmpOutDir))
     else:
         break
 count = 0
@@ -178,8 +176,6 @@ for f in bFiles:
     if count < count2:
         boomiOlds.extend(copySingleMessages(f, _tmpOutDir))
         count = count + 1
-    ##    count2 = count2 + 1
-    ##    boomiOlds.extend(copySingleMessages(f, _tmpOutDir))
     else:
         break
 
@@ -198,7 +194,7 @@ if len(alaNews) == len(boomiOlds):
     pass
 else:
     testResult2 = -1
-    print("<<<####### " + str(len(alaNews)) + " Ala files != " +  str(len(boomiOlds)) + " #######>>>")
+    print("<<<####### " + str(len(alaNews)) + " Ala files != " + str(len(boomiOlds)) + " #######>>>")
 
 with open(_cvsFile, 'w') as csvfile:
     fieldnames = ['ala_file', 'boomi_file', 'result']
@@ -206,8 +202,6 @@ with open(_cvsFile, 'w') as csvfile:
     writer.writeheader()
     for f in alaNews:
         fa = f.replace(_tmpInDir, _tmpOutDir)
-        # fa = (fa.replace("\\", "\\\\"))
-        ## print(fa)
         if fa in boomiOlds:
 
             if (compareColleagueXML(f, fa)):
