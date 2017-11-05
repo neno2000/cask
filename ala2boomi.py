@@ -140,12 +140,13 @@ def email_report(inMessHtml, inMessText, inAttach):
 
     sender = gAccount
     gmail_password = gPass
-    recipients = [email_target]
-
+    recipients = email_target.split(",")
+    print(recipients)
     # Create the enclosing (outer) message
     outer = MIMEMultipart()
     outer['Subject'] = 'Test Report: Colleague Integration Migration 2 ReLaX'
     outer['To'] = COMMASPACE.join(recipients)
+   ## outer['To'] = .join(recipients)
     outer['From'] = sender
     outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
     text = inMessText
@@ -302,7 +303,7 @@ if (os.path.isdir(_inDir) & os.path.isdir(_outDir)):
     failCounter = 0
     notInRelCounter = 0
     boomiCount = 0
-
+    alamess = len(alaNews)
     with open(_cvsFile, 'w') as csvfile:
         fieldnames = ['ala_file', 'boomi_file', 'result']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -343,12 +344,13 @@ if (os.path.isdir(_inDir) & os.path.isdir(_outDir)):
                 <colgroup span="4"></colgroup>
                   <tr>
                     <th>Boomi Messages</th>
+                    <th>ReLax Messages</th>
                     <th>Relax On Success</th>
                     <th>Relax failed</th>
                     <th>Relax Missing</th>
                   </tr>    
                   <tr>
-                    <td>""" + str(boomiCount) + "</td>" + "<td>" + str(successCounter) + "</td>"  +  "<td>" +  str(failCounter) + "</td>" +  "<td>" + str(notInRelCounter) + "</td></tr></table></body></html>"
+                    <td>""" + str(boomiCount) + "</td>" + "<td>" + str(alamess) + "</td>" + "<td>" + str(successCounter) + "</td>"  +  "<td>" +  str(failCounter) + "</td>" +  "<td>" + str(notInRelCounter) + "</td></tr></table></body></html>"
             text_message = "THE TEST PASSED!!!"
             email_report(html_message, text_message, _cvsFile)
         else:
@@ -358,12 +360,13 @@ if (os.path.isdir(_inDir) & os.path.isdir(_outDir)):
                 <colgroup span="4"></colgroup>
                   <tr>
                     <th>Boomi Messages</th>
+                    <th>ReLax Messages</th>
                     <th>Relax On Success</th>
                     <th>Relax failed</th>
                     <th>Relax Missing</th>
                   </tr>    
                   <tr>
-                    <td>""" + str(boomiCount) + "</td>" + "<td>" + str(successCounter) + "</td>"  +  "<td>" +  str(failCounter) + "</td>" +  "<td>" + str(notInRelCounter) + "</td></tr></table></body></html>"
+                    <td>""" + str(boomiCount) + "</td>" +  "<td>" + str(alamess) + "</td>" + "<td>" + str(successCounter) + "</td>"  +  "<td>" +  str(failCounter) + "</td>" +  "<td>" + str(notInRelCounter) + "</td></tr></table></body></html>"
             text_message = "THE TEST FAILED!!!"
             email_report(html_message, text_message, _cvsFile)
 
